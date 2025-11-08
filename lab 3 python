@@ -1,0 +1,63 @@
+class Deque:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.deque = [None] * capacity
+        self.front = 0
+        self.rear = -1
+        self.count = 0
+
+    def is_empty(self):
+        return self.count == 0
+
+    def is_full(self):
+        return self.count == self.capacity
+
+    def add_front(self, item):
+        if self.is_full():
+            print("Deque overflow (full)")
+            return
+        self.front = (self.front - 1) % self.capacity
+        self.deque[self.front] = item
+        self.count += 1
+
+    def add_rear(self, item):
+        if self.is_full():
+            print("Deque overflow (full)")
+            return
+        self.rear = (self.rear + 1) % self.capacity
+        self.deque[self.rear] = item
+        self.count += 1
+
+    def remove_front(self):
+        if self.is_empty():
+            print("Deque underflow (empty)")
+            return None
+        item = self.deque[self.front]
+        self.deque[self.front] = None
+        self.front = (self.front + 1) % self.capacity
+        self.count -= 1
+        return item
+
+    def remove_rear(self):
+        if self.is_empty():
+            print("Deque underflow (empty)")
+            return None
+        item = self.deque[self.rear]
+        self.deque[self.rear] = None
+        self.rear = (self.rear - 1) % self.capacity
+        self.count -= 1
+        return item
+
+    def size(self):
+        return self.count
+
+    def display(self):
+        print("Deque contents:")
+        if self.is_empty():
+            print("  [Empty]")
+            return
+        i = self.front
+        for _ in range(self.count):
+            print(self.deque[i], end=" ")
+            i = (i + 1) % self.capacity
+        print("\n")
